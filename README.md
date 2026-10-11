@@ -91,18 +91,18 @@ Open your browser at: `http://localhost:5173`
 
 ---
 
-## 👥 System Accounts Directory
+## 👥 Default Demo Accounts (Testing & Evaluation)
 
-| Role | ID Number | Name |
-| :--- | :--- | :--- |
-| **Administrator** | `22100277` | Joel June Fabillar |
-| **Registrar** | `EMP-2012-0051` | Dr. Maria Clara |
-| **Canteen Personnel** | `EMP-2020-0042` | Ms. Elena Cruz |
-| **Library Personnel** | `EMP-2018-0119` | Bro. Antonio Reyes |
-| **Student / Parent** | `STU-2026-0891` | Kyle Zenarosa |
+| Role | ID Number | Name | Default Password |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `22100277` | Joel June Fabillar | `Admin@123` |
+| **Registrar** | `EMP-2012-0051` | Dr. Maria Clara | `Registrar@123` |
+| **Canteen Personnel** | `EMP-2020-0042` | Ms. Elena Cruz | `Canteen@123` |
+| **Library Personnel** | `EMP-2018-0119` | Bro. Antonio Reyes | `Library@123` |
+| **Student / Parent** | `STU-2026-0891` | Kyle Zenarosa | `Student@123` |
 
-> [!NOTE]
-> Passwords and credentials are managed privately by institutional administrators and are never published in public repositories. For authorized local testing, contact the development lead or authenticate using role switcher in development mode.
+> [!TIP]
+> These credentials are provided for testing, evaluation, and grading purposes. Production deployments should enforce individualized passwords and password changes upon initial login.
 
 ---
 
