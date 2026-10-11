@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISSRMS Architecture & Implementation Analysis</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FDFBF7;
+      --card-bg: #FFFFFF;
+      --border: #EDE0D4;
+      --text: #1A0A0A;
+      --text-muted: #6B5B5B;
+      --primary: #611A17;
+      --accent: #A88020;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 16px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 36px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    p, li {
+      font-size: 14.5px;
+      color: #332626;
+      margin-bottom: 12px;
+    }
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+    strong { color: #110707; }
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13.5px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #FBF6EE;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #FAF8F5; }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: #F5EFEB;
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--primary);
+    }
+    pre {
+      background: #241D1D;
+      color: #F8F4EF;
+      padding: 16px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .mermaid {
+      background: #FAF8F5;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+    }
+    .banner {
+      background: #FBF6EE;
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 13.5px;
+      color: #6B5B5B;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="banner">
+      💡 <strong>Saint Joseph School of Mactan — ISSRMS Architecture Guide</strong><br>
+      This document renders interactive Mermaid diagrams, system boundaries, and visualizer specifications for design and engineering teams.
+    </div>
+    <div id="content">Loading documentation...</div>
+  </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+
+    async function loadMarkdown() {
+      try {
+        let text = document.getElementById('md-data') ? document.getElementById('md-data').textContent : '';
+        if (!text) {
+          const res = await fetch('./ARCHITECTURE_ANALYSIS.md');
+          text = await res.text();
+        }
+        
+        // Custom renderer for mermaid
+        const renderer = new marked.Renderer();
+        const originalCode = renderer.code.bind(renderer);
+        renderer.code = function({ text, lang }) {
+          if (lang === 'mermaid') {
+            return `<div class="mermaid">${text}</div>`;
+          }
+          return originalCode({ text, lang });
+        };
+
+        marked.setOptions({ renderer });
+        document.getElementById('content').innerHTML = marked.parse(text);
+
+        await mermaid.run({
+          nodes: document.querySelectorAll('.mermaid')
+        });
+      } catch (err) {
+        document.getElementById('content').innerHTML = `<p style="color:red">Failed to load content: ${err.message}</p>`;
+      }
+    }
+
+    loadMarkdown();
+  </script>
+</body>
+</html>
