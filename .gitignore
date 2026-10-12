@@ -37,6 +37,7 @@ browser_review.mjs
 figma_previews/
 figma_*.txt
 figma_*.json
+.commandcode/
 
 # OS & Editor Files
 .DS_Store
