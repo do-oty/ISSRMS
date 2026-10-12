@@ -21,6 +21,12 @@ function getCategoryBadge(cat) {
   return 'bg-emerald-50 text-emerald-800 border border-emerald-200'
 }
 
+function getGreetingName(fullName) {
+  if (!fullName) return 'User'
+  const clean = fullName.replace(/^(Dr\.|Dr|Ms\.|Ms|Mr\.|Mr|Mrs\.|Mrs|Bro\.|Bro|Fr\.|Fr|Rev\.|Engr\.|Atty\.|Sister|Brother)\s+/i, '').trim()
+  return clean.split(' ')[0] || 'User'
+}
+
 function MiniCalendar({ events = [] }) {
   const [currentMonth, setCurrentMonth] = useState(new Date(2026, 9, 1)) // October 2026
 
@@ -251,7 +257,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-[24px] font-bold text-[#000000] leading-tight">
-              Peace and all good, {currentUser?.name ? currentUser.name.split(' ')[0] : 'User'} ✌️ 
+              Peace and all good, {getGreetingName(currentUser?.name)} ✌️ 
             </h1>
             <p className="text-[15px] font-normal text-[#6b5b5b] mt-1">
               Here’s what’s happening at Saint Joseph School of Mactan.
